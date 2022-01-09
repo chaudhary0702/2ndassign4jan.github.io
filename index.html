@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Validation</title>
+        <style>
+            *{
+                box-sizing: border-box;
+            }
+            body{
+                display: flex;
+                text-align: center;
+                align-items: center;
+                justify-content: center;
+                margin: 0;
+                background: linear-gradient(to top right, #ada34a 0%, #6f9e48 100%);
+                min-height: 100vh;
+            }
+            .container{
+                background-color: white;
+                border-radius: 5px;
+                box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+                width: 430px;
+                max-width: 100%;
+
+            }
+            form{
+                padding: 40px 40px;
+            }
+            .form-control{
+                margin-bottom: 10px;
+                padding-bottom: 20px;
+                position: relative;
+                text-align: left;
+            }
+            .form-control label{
+                display: inline-block;
+                margin-bottom: 5px;
+                
+            }
+            .form-control input{
+                border: 2px solid #d8e8ea;
+                border-radius: 4px;
+                display: block;
+                font-size: 14px;
+                padding: 10px;
+                width: 100%;
+
+            }
+            .form-control small{
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                visibility: hidden;
+            }
+            .form button{
+                background-color: #7a743a;
+                border:2px solid grey;
+                border-radius: 4px;
+                display: block;
+                width: 100%;
+                padding: 10px;
+                font-size: 20px;
+            }
+            h1{
+                width: 100%;
+                background-color: #7a743a;;
+                margin-top: 0%;
+                border-radius: 5px 5px 0 0;
+                height: 10vh;
+                padding-top: 10px;
+                color: black;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Sign up</h1>
+            <form class="form"action="">
+                <div class="form-control">                   
+                    <input  id="username" type="text" placeholder="Enter Username">               
+                    <small id="usernameerror">Error message</small>                
+                </div>
+                <div class="form-control">
+                    <input type="email" id="email" placeholder="Enter Email">                
+                    <small id="emailerror">Error message</small>              
+                </div>
+                <div class="form-control">            
+                    <input type="password" id="password" placeholder="password">    
+                    <small id="passworderror">Error message</small>                   
+                </div>
+                <div class="form-control">                    
+                    <input type="password" placeholder="Confirm Password " id="password2">                
+                    <small id="password2error">Error message</small>                    
+                </div>
+                <button  id="btn">Submit</button>
+            </form>
+        </div>
+        <script>
+            var username = document.getElementById('username');
+            var email = document.getElementById('email');
+            var password = document.getElementById('password');
+            var password2 = document.getElementById('password2');
+            var usernameerror = document.getElementById('usernameerror') ;
+            var btn = document.getElementById('btn');
+            var emailerror=  document.getElementById("emailerror");
+            var passworderror=  document.getElementById("passworderror");
+            var password2error= document.getElementById("password2error");
+            btn.addEventListener('click',(e)=>{
+                e.preventDefault();
+                submit();
+            });
+            function  submit(){
+                var count=0;
+                if(username.value==''){
+                    usernameerror.textContent="Please fill out this field";
+                    usernameerror.style.visibility="visible";
+                    username.style.border="2px solid red ";
+                    usernameerror.style.color="red"
+                }
+                else if(username.value.length >10 )
+                { 
+                    usernameerror.textContent=" Name does not extend above 10 characters";
+                    usernameerror.style.visibility="visible";
+                    usernameerror.style.color="red";
+                    username.style.border="2px solid red ";
+
+                }
+                else{
+                    username.style.border="2px solid green ";
+                    usernameerror.style.visibility="hidden";
+                    count+=1;
+
+                }
+                if(email.value==""){
+                    emailerror.textContent="Please fill out this field";
+                    emailerror.style.visibility="visible";
+                    emailerror.style.color="red";
+                    email.style.border="2px solid red";
+
+                }
+                else if(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email.value)){
+                    email.style.border="2px solid green ";
+                    emailerror.style.visibility="hidden";
+                    count+=1;
+                }
+                else{
+                    emailerror.textContent="Email not valid";
+                    emailerror.style.visibility="visible";
+                    emailerror.style.color="red";
+                    email.style.border="2px solid red";
+                }
+                if(password.value==""){
+                    passworderror.style.visibility="visible";
+                    passworderror.style.color="red";
+                    passworderror.textContent="Please fill out this field";
+                    password.style.border="2px solid red ";                    
+                }
+                else if(! password.value.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{10,}$/)){
+                    passworderror.textContent="Password must contains one Uppercase, one lower case,one special chartacters ,one number and minimum 10 letters";
+                    passworderror.style.visibility="visible";
+                    passworderror.style.color="red";
+                    password.style.border="2px solid red";
+                    password.style.marginBottom="10px";
+                }
+                else{
+                    password.style.border="2px solid green";
+                    passworderror.style.visibility="hidden";
+                    count+=1;
+                }
+                if (password2.value==""){
+                    password2error.style.visibility="visible";
+                    password2error.textContent="Please fill out this field";
+                    password2error.style.color="red";
+                    password2.style.border="2px solid red";
+                }
+                else if(password.value==password2.value){
+                    password2.style.border="2px solid green";
+                    password2error.style.visibility="hidden";
+                    count+=1;
+                }
+                else{
+                    password2error.style.visibility="visible";
+                    password2error.textContent="Password does not match";
+                    password2error.style.color="red";
+                    password2.style.border="2px solid red";
+                }
+                if(count==4){
+                    console.log(username.value);
+                    console.log(email.value);
+                    console.log(password.value);
+                    console.log(password2.value);
+                }
+                else{
+                    console.log("Not provided proper data ");
+                    console.log("Submit button doesn't work");
+                }
+            }
+        </script>
+    </body>
+</html>
